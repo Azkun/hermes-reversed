@@ -28,11 +28,11 @@
 - Chaque **ligne** du réseau a un identifiant différent de celui connu couramment par les utilisateurs. Exemple: le bus **B1** a l'identifiant **RTM:LNE:139**.
 - Jusqu'à ce jour, aucun **endpoint** n'a été trouvé pour chercher un bus par son **PublicCode** (**B1** par exemple), cela n'est pas utilisé par le site ou l'application. Je passe donc par une boucle dans le module.
 - Pas tous les arrêts ont une description d'adresse, mais tous ont une latitude/longitude.
-- La recherche pour trouver les horaires pa arrêt s'est effectué dans un sens linéaire afin de trouver des informations de plus en plus précises : Trouver toutes les lignes de bus et en déduire celle qu'on veut, prendre son `id` en RTM:LNE:XXX, trouver ses deux directions en RTM:RTE:XXX, puis trouver chaque arrêt chronologique de la route RTM:PNT:XXX. Finalement on peut trouver les prochains pasages des bus sur l'arrêt.
+- La recherche pour trouver les horaires par arrêt s'est effectué linéairement afin de trouver des informations de plus en plus précises : Trouver toutes les lignes de bus et en déduire celle qu'on veut, prendre son `id` en RTM:LNE:XXX, trouver ses deux directions en RTM:RTE:XXX, puis trouver chaque arrêt chronologique de la route RTM:PNT:XXX. Finalement on peut trouver les prochains passages des bus sur l'arrêt.
 
 ## Liens absolus
 
-Pour la suite, deux liens absolus seront utilisés abrégés en `front` et `Hermes`, les voici :
+Pour la suite, deux URLs absolus utilisés dans l'API seront utilisés abrégés en `front` et `Hermes`, les voici :
 
 ```
 https://api.rtm.fr/front
