@@ -424,4 +424,4 @@ De plus, la recherche de nouveaux endpoints utiles est simple et complètement c
 
 # Disclaimer
 > [!IMPORTANT]
-> Ce projet est à but éducatif uniquement. Je ne suis pas affilié à la RTM et ce dépôt n’est ni soutenu ni approuvé par celle-ci. Tous les noms et marques appartiennent à leurs propriétaires respectifs. Je ne suis pas non plus responsable de l'usage des tiers utilisant les informations fournies sur ce dépôt. Vous pouvez mon contacter pour toute demande de suppression.
+> Ce projet est à but éducatif uniquement. Je ne suis pas affilié à la RTM et ce dépôt n’est ni soutenu ni approuvé par celle-ci. Tous les noms et marques appartiennent à leurs propriétaires respectifs. Je ne suis pas non plus responsable de l'usage des tiers utilisant les informations fournies sur ce dépôt. Vous pouvez me contacter pour toute demande de suppression.
