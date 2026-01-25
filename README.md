@@ -4,7 +4,7 @@
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Azkun.hermes-reversed) 
 ![stars](https://img.shields.io/github/stars/Azkun/hermes-reversed)
 
-*Le but de ce repo est de rendre accessible l'utilisation de l'**API Hermes** de la **Régie des transports Métropolitains**, la régie s'occupant des transports à Marseille. Je n'aime pas particulièrement les transports de ma ville mais en faisant de la **rétro-ingénierie**, j'ai remarqué des choix dans l'infrastructure qui sont plutôt intéressants. Le nom **Hermes** a été choisi par sa précense sur plusieurs **endpoints**.*
+*Le but de ce repo est de rendre accessible l'utilisation de l'**API Hermes** de la **Régie des transports Métropolitains**, la régie s'occupant des transports à Marseille. Je n'aime pas particulièrement les transports de ma ville mais en faisant de la **rétro-ingénierie**, j'ai remarqué des choix dans l'infrastructure qui sont plutôt intéressants. Le nom **Hermes** a été choisi par sa présence sur plusieurs **endpoints**.*
 
 **Le repo se divise en deux parties :**
 - Une documentation non-exhaustive des endpoints de l'**API Hermes**
