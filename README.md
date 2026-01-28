@@ -26,13 +26,12 @@
 ## Observations
 
 - Chaque **ligne** du réseau a un identifiant différent de celui connu couramment par les utilisateurs. Exemple: le bus **B1** a l'identifiant **RTM:LNE:139**.
-- Jusqu'à ce jour, aucun **endpoint** n'a été trouvé pour chercher un bus par son **PublicCode** (**B1** par exemple), cela n'est pas utilisé par le site ou l'application. Je passe donc par une boucle dans le module.
 - Pas tous les arrêts ont une description d'adresse, mais tous ont une latitude/longitude.
 - La recherche pour trouver les horaires par arrêt s'est effectué linéairement afin de trouver des informations de plus en plus précises : Trouver toutes les lignes de bus et en déduire celle qu'on veut, prendre son `id` en RTM:LNE:XXX, trouver ses deux directions en RTM:RTE:XXX, puis trouver chaque arrêt chronologique de la route RTM:PNT:XXX. Finalement on peut trouver les prochains passages des bus sur l'arrêt.
 
 ## Liens absolus
 
-Pour la suite, deux URLs absolus utilisés dans l'API seront utilisés abrégés en `front` et `Hermes`, les voici :
+Pour la suite, trois URLs absolus utilisés dans l'API seront utilisés abrégés en `front`, `fiches` et `Hermes`, les voici :
 
 ```
 https://api.rtm.fr/front
@@ -41,6 +40,11 @@ https://api.rtm.fr/front
 ```
 https://map.rtm.fr/Hermes
 ```
+
+```
+https://api.rtm.fr/fiche-horaires/
+```
+
 
 ## Endpoints généraux
 
@@ -248,6 +252,45 @@ Cet **endpoint** sert à connaître les arrêts qu'un transport défile. Chaque 
 ```
 </details>
 
+
+<details>
+<summary>front /getLineInfo/lineNumber</summary>
+
+Cet **endpoint** sert à connaître les informations d'une ligne par rapport à son identifiant courant pour les utilisateurs (parfois explicité comme "PublicCode" ou "lineNumber") 
+
+- Exemple de réponse `/getLineInfo/18` :
+```json
+{
+    "data": {
+        "name": "Castellane - Le Bosquet",
+        "id": "RTM:LNE:62",
+        "Carrier": "Régie des Transports Métropolitains",
+        "Operator": "RTM",
+        "PublicCode": "18",
+        "TypeOfLine": "Régulière_interne",
+        "VehicleType": "Autobus Standard",
+        "night": "0",
+        "lepiloteId": "501",
+        "color": "#814997",
+        "sqliType": "bus",
+        "sqliSort": "38",
+        "school": "0",
+        "daynight": "0",
+        "horairePeriodType": "annee",
+        "PdfNamePlan": "rtm_plan_18_annee.pdf",
+        "PdfNameHoraire": "rtm_horaire_18_annee.pdf"
+    },
+    "meta": {
+        "meta_dateCache_SearchRoutes": false,
+        "meta_file_SearchRoutes": false,
+        "function": " getLineAction '18' "
+    },
+    "returnCode": 200,
+    "dateReturn": "2026-01-28T20:06:31+01:00"
+}
+```
+</details>
+
 <details>
 <summary>Hermes /station-details-by-line?pointList=RTM:PNT:XXXXXXXX/</summary>
 
@@ -286,6 +329,16 @@ Cet **endpoint** sert à trouver les prochains bus qui paseront à un arrêt pr�
 ```
 </details>
 
+
+<details>
+<summary>fiches /file.pdf/</summary>
+
+Cet **endpoint** renvoie un fichier pdf sur les horaires à travers le réseau. Il est possible de trouver différents noms de pdf par le biais de /getStations/ via "PdfNameHoraire".
+
+- Exemple de réponse : `/rtm_horaire_18_2_001291_annee.pdf/`
+[Le fichier PDF en question](https://api.rtm.fr/fiche-horaires/rtm_horaire_18_2_001291_annee.pdf)
+</details>
+
 # Documentation du module
 
 ### Building :
@@ -310,17 +363,6 @@ CJS: `const Hermes = require('./dist/index.cjs')`
 
 *Vous devez importer le module... jusqu'ici tout va bien*
 
-<details>
-<summary>Tableau des méthodes</summary>
-
-| Méthodes     | Arguments | Réponse | Description |
-|--------------|-----|----|---|
-| `await getLines()` | mode: "bus", "tram", "metro" | Promise<…>  | Charge toutes les lignes d'un type de transport |
-| .getIdFromPublicCode | publicCode: string | string | Depuis getLines(), permet de trouver l'id d'une ligne depuis son nom publique via une boucle |
-| .data | X | object | Récupérer des informations sur toutes les lignes |
-| `await getAutocomplete()` | adresse: string | Promise<…> | Renvoie une liste d'adresse plausible selon la string fournie via fuzzy search (de l'API) |
-</details>
-
 ### Exemples :
 
 <details>
@@ -331,10 +373,7 @@ CJS: `const Hermes = require('./dist/index.cjs')`
 import { getLines } from 'hermes-reversed'
 
 const metro = await getLines('metro')
-const M1ID = metro.getLineFromPublicCode('M1').id
-console.log(M1ID)
-// output: RTM:LNE:116
-console.log(metro.data[M1ID])
+console.log(metro["RTM:LNE:116"])
 // output: 
 // {
 //   name: 'La Rose - La Fourragère',
@@ -358,6 +397,42 @@ console.log(metro.data[M1ID])
 
 ```
 </details>
+
+
+<details>
+<summary>Usage du getLineInfo()</summary>
+
+*Plusieurs informations utiles peuvent être utilisées comme la couleur, le nom de la ligne explicitant ses terminus etc*
+```js
+import { getLineInfo } from 'hermes-reversed'
+
+const m2 = await getLineInfo("M2")
+console.log(m2)
+// output: 
+// {
+//   name: 'Gèze - Sainte-Marguerite Dromel   ',
+//   id: 'RTM:LNE:125',
+//   Carrier: 'Régie des Transports Métropolitains',
+//   Operator: 'RTM',
+//   PublicCode: 'M2',
+//   TypeOfLine: 'Régulière_interne',
+//   VehicleType: 'Métro',
+//   night: '0',
+//   lepiloteId: '544',
+//   color: '#E30613',
+//   sqliType: 'metro',
+//   sqliSort: '2',
+//   school: '0',
+//   daynight: '0',
+//   horairePeriodType: 'annee',
+//   PdfNamePlan: 'rtm_plan_m2_annee.pdf',
+//   PdfNameHoraire: 'rtm_horaire_m2_annee.pdf'
+// }
+
+
+```
+</details>
+
 <details>
 <summary>Usage du getAutocomplete()</summary>
 
@@ -411,7 +486,7 @@ console.log(time)
 # To-dos
 
 - Ajouter `station-details-by-line` dans le module
-- Ajouter la méthode post `front /getItinerary/` pour trouver un itinéraire à partir de `departure` (format adresse formatée), `keywordsdep` (format label d'adresse), `arrival` & `keywordsarr`, `optimize:"fastest"`, `datetime` & `date`, ainsi que les modes (Metro, Tramway, Bus...) dans l'API et le module
+- Ajouter la méthode POST `front /getItinerary/` pour trouver un itinéraire à partir de `departure` (format adresse formatée), `keywordsdep` (format label d'adresse), `arrival` & `keywordsarr`, `optimize:"fastest"`, `datetime` & `date`, ainsi que les modes (Metro, Tramway, Bus...) dans l'API et le module
 - Update des méthodes pour le QOL & Optimisations
 - Trouver de nouveaux endpoints
 - Upload le module sur NPM  & sur un CDN
