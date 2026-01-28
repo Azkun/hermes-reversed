@@ -490,6 +490,7 @@ console.log(time)
 - Update des méthodes pour le QOL & Optimisations
 - Trouver de nouveaux endpoints
 - Upload le module sur NPM  & sur un CDN
+- Commencer une webapp open-source sur le principe de l'application RTM (en plus light, sans download) avec des informations supplémentaires  
 
 # Contributions
 
