@@ -1,8 +1,10 @@
 ![hermes-reversed logo](/assets/rtmhr_logo.png)
 
 ---
+<img src="https://m3-markdown-badges.vercel.app/stars/12/3/Azkun/hermes-reversed"> <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/TypeScript/typescript3.svg">
+
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Azkun.hermes-reversed) 
-![stars](https://img.shields.io/github/stars/Azkun/hermes-reversed)
+
 
 *Le but de ce repo est de rendre accessible l'utilisation de l'**API Hermes** de la **Régie des transports Métropolitains**, la régie s'occupant des transports à Marseille. Je n'aime pas particulièrement les transports de ma ville mais en faisant de la **rétro-ingénierie**, j'ai remarqué des choix dans l'infrastructure qui sont plutôt intéressants. Le nom **Hermes** a été choisi par sa présence sur plusieurs **endpoints**.*
 
